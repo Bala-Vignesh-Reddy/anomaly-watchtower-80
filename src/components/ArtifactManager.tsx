@@ -23,7 +23,14 @@ import { Input } from "@/components/ui/input";
 const ArtifactManager = () => {
   const { toast } = useToast();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [newArtifact, setNewArtifact] = useState({ name: "", status: "working" });
+  const [newArtifact, setNewArtifact] = useState({ 
+    name: "", 
+    status: "working",
+    description: null,
+    image_path: null,
+    audio_path: null,
+    video_path: null
+  });
 
   // Fetch artifacts
   const { data: artifacts, refetch } = useQuery({
@@ -40,11 +47,27 @@ const ArtifactManager = () => {
   // Add new artifact
   const handleAddArtifact = async () => {
     try {
-      const { error } = await supabase.from("artifact").insert([newArtifact]);
+      const { error } = await supabase
+        .from("artifact")
+        .insert([{
+          name: newArtifact.name,
+          status: newArtifact.status,
+          description: newArtifact.description,
+          image_path: newArtifact.image_path,
+          audio_path: newArtifact.audio_path,
+          video_path: newArtifact.video_path
+        }]);
       if (error) throw error;
       toast({ title: "Artifact added successfully" });
       setIsAddDialogOpen(false);
-      setNewArtifact({ name: "", status: "working" });
+      setNewArtifact({ 
+        name: "", 
+        status: "working",
+        description: null,
+        image_path: null,
+        audio_path: null,
+        video_path: null
+      });
       refetch();
     } catch (error) {
       console.error("Error adding artifact:", error);
