@@ -2,45 +2,54 @@ import { useEffect, useState } from "react";
 import AnomalyCard from "./AnomalyCard";
 import { useToast } from "@/hooks/use-toast";
 
+type AnomalyType = {
+  id: number;
+  type: "error" | "warning" | "info";
+  title: string;
+  description: string;
+  timestamp: string;
+  source: "database" | "server" | "system";
+};
+
 const LiveFeed = () => {
   const { toast } = useToast();
-  const [anomalies, setAnomalies] = useState([
+  const [anomalies, setAnomalies] = useState<AnomalyType[]>([
     {
       id: 1,
-      type: "error" as const,
+      type: "error",
       title: "Database Connection Failed",
       description: "Unable to establish connection with primary database cluster",
       timestamp: "2 mins ago",
-      source: "database" as const,
+      source: "database",
     },
     {
       id: 2,
-      type: "warning" as const,
+      type: "warning",
       title: "High CPU Usage",
       description: "Server CPU utilization exceeded 90% threshold",
       timestamp: "5 mins ago",
-      source: "server" as const,
+      source: "server",
     },
     {
       id: 3,
-      type: "info" as const,
+      type: "info",
       title: "System Update Required",
       description: "New security patches available for installation",
       timestamp: "10 mins ago",
-      source: "system" as const,
+      source: "system",
     },
   ]);
 
   useEffect(() => {
     // Simulate new anomalies being detected
     const interval = setInterval(() => {
-      const newAnomaly = {
+      const newAnomaly: AnomalyType = {
         id: Date.now(),
-        type: Math.random() > 0.5 ? "error" : "warning" as const,
+        type: Math.random() > 0.5 ? "error" : "warning",
         title: "New Anomaly Detected",
         description: "Unusual behavior detected in system components",
         timestamp: "Just now",
-        source: "system" as const,
+        source: "system",
       };
 
       setAnomalies(prev => [newAnomaly, ...prev].slice(0, 5));
