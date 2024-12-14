@@ -1,5 +1,6 @@
 import StatCard from "@/components/StatCard";
 import LiveFeed from "@/components/LiveFeed";
+import VideoFeed from "@/components/VideoFeed";
 
 const Index = () => {
   return (
@@ -29,8 +30,11 @@ const Index = () => {
           <StatCard title="System Uptime" value="99.9%" />
         </div>
 
-        <div className="rounded-lg border border-gray-100 bg-white/50 p-6 shadow-sm backdrop-blur-sm">
-          <LiveFeed />
+        <div className="grid gap-6 lg:grid-cols-2">
+          <VideoFeed />
+          <div className="rounded-lg border border-gray-100 bg-white/50 p-6 shadow-sm backdrop-blur-sm">
+            <LiveFeed />
+          </div>
         </div>
       </div>
     </div>
