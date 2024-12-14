@@ -1,5 +1,6 @@
 import StatCard from "@/components/StatCard";
 import MonitoringTabs from "@/components/MonitoringTabs";
+import ArtifactManager from "@/components/ArtifactManager";
 
 const Index = () => {
   return (
@@ -29,7 +30,13 @@ const Index = () => {
           <StatCard title="System Uptime" value="99.9%" />
         </div>
 
-        <MonitoringTabs />
+        <div className="mb-8">
+          <MonitoringTabs />
+        </div>
+
+        <div className="mt-8">
+          <ArtifactManager />
+        </div>
       </div>
     </div>
   );
