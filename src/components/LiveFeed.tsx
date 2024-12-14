@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import AnomalyCard from "./AnomalyCard";
+import { useToast } from "@/hooks/use-toast";
 
 const LiveFeed = () => {
+  const { toast } = useToast();
   const [anomalies, setAnomalies] = useState([
     {
       id: 1,
@@ -28,6 +30,33 @@ const LiveFeed = () => {
       source: "system" as const,
     },
   ]);
+
+  useEffect(() => {
+    // Simulate new anomalies being detected
+    const interval = setInterval(() => {
+      const newAnomaly = {
+        id: Date.now(),
+        type: Math.random() > 0.5 ? "error" : "warning" as const,
+        title: "New Anomaly Detected",
+        description: "Unusual behavior detected in system components",
+        timestamp: "Just now",
+        source: "system" as const,
+      };
+
+      setAnomalies(prev => [newAnomaly, ...prev].slice(0, 5));
+      
+      // Show toast notification for new anomaly
+      toast({
+        title: "New Anomaly Detected",
+        description: "Check the live feed for details",
+        variant: newAnomaly.type === "error" ? "destructive" : "default",
+      });
+
+      console.log("New anomaly detected:", newAnomaly);
+    }, 30000); // New anomaly every 30 seconds
+
+    return () => clearInterval(interval);
+  }, [toast]);
 
   return (
     <div className="space-y-4">
